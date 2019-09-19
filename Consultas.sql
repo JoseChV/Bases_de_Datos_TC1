@@ -1,3 +1,17 @@
+--Top 10 aerolineas con mayor cantidad de empleados
+SELECT *
+FROM Aerolinea
+ORDER BY CantEmpleados DESC
+LIMIT 10;
+
+--Top 10 aeropuertos con mas aerolineas   
+SELECT COUNT(A.IdAeropuerto) AS TopAeropuerto, A.Nombre, A.Codigo
+FROM Aeropuerto A
+INNER JOIN AerolineaAeropuerto AA ON AA.IdAeropuerto == A.IdAeropuerto
+GROUP BY AA.IdAerolinea
+ORDER BY TopAeropuerto DESC
+LIMIT 10;
+
 --Toda la información de un empleado del aeropuerto con el sueldo más alto.
 SELECT *
 FROM EmpleadoAeropuerto
