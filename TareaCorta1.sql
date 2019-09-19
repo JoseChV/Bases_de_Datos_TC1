@@ -144,7 +144,7 @@ CREATE TABLE ControlAvion(
     IdVuelo INTEGER NOT NULL,
     CodigoAvion TEXT NOT NULL,
     CodigoComunicacion TEXT NOT NULL,
-    Vuelo TEXT NOT NULL,
+    NumVuelo TEXT NOT NULL,
     HoraLlegada TIME NOT NULL,
     PosicionActual TEXT NOT NULL,
     FOREIGN KEY (IdAvion) REFERENCES Avion(IdAvion),
