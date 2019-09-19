@@ -5,12 +5,12 @@ ORDER BY CantEmpleados DESC
 LIMIT 10;
 
 --Top 10 aeropuertos con mas aerolineas   
-SELECT COUNT(A.IdAeropuerto) AS TopAeropuerto, A.Nombre, A.Codigo
-FROM Aeropuerto A
-INNER JOIN AerolineaAeropuerto AA ON AA.IdAeropuerto == A.IdAeropuerto
-GROUP BY AA.IdAerolinea
-ORDER BY TopAeropuerto DESC
-LIMIT 10;
+SELECT COUNT(A.IdAerolinea) AS CantidadAerolineas, Aeropuerto.IdAeropuerto
+FROM Aerolinea A
+INNER JOIN AerolineaAeropuerto AA ON A.IdAerolinea = AA.IdAeroliena
+INNER JOIN Aeropuerto ON AA.IdAeropuerto = Aeropuerto.IdAeropuerto
+GROUP BY Aeropuerto.IdAeropuerto
+ORDER BY CantidadAerolineas DESC;
 
 --Toda la información de un empleado del aeropuerto con el sueldo más alto.
 SELECT *
@@ -47,7 +47,7 @@ SELECT F.Costo, A.Modelo, A.Fabricante, A.Codigo, Aerolinea.IdAerolinea, Aeropue
 FROM Factura F
 INNER JOIN Avion A ON F.IdAvion = A.IdAvion
 INNER JOIN Aerolinea ON A.IdAerolinea = Aerolinea.IdAerolinea
-INNER JOIN AerolineaAeropuerto AA ON Aerolinea.IdAerolinea = AA.IdAerolinea
+INNER JOIN AerolineaAeropuerto AA ON Aerolinea.IdAerolinea = AA.IdAeroliena
 INNER JOIN Aeropuerto ON AA.IdAeropuerto = Aeropuerto.IdAeropuerto
 ORDER BY Aeropuerto.IdAeropuerto, A.IdAerolinea, F.Costo;
 
@@ -55,7 +55,7 @@ ORDER BY Aeropuerto.IdAeropuerto, A.IdAerolinea, F.Costo;
 SELECT COUNT(*) AS CantidadAviones, Aeropuerto.IdAeropuerto
 FROM Avion
 INNER JOIN Aerolinea A ON Avion.IdAerolinea = A.IdAerolinea
-INNER JOIN AerolineaAeropuerto AA ON A.IdAerolinea = AA.IdAerolinea
+INNER JOIN AerolineaAeropuerto AA ON A.IdAerolinea = AA.IdAeroliena
 INNER JOIN Aeropuerto ON AA.IdAeropuerto = Aeropuerto.IdAeropuerto
 WHERE Avion.Estado == 'Activo'
 GROUP BY Aeropuerto.IdAeropuerto;
@@ -65,7 +65,7 @@ SELECT AVG(F.Costo) AS CostoPromedio, Aeropuerto.IdAeropuerto
 FROM Factura F
 INNER JOIN Avion A ON F.IdAvion = A.IdAvion
 INNER JOIN Aerolinea ON A.IdAerolinea = Aerolinea.IdAerolinea
-INNER JOIN AerolineaAeropuerto AA ON Aerolinea.IdAerolinea = AA.IdAerolinea
+INNER JOIN AerolineaAeropuerto AA ON Aerolinea.IdAerolinea = AA.IdAeroliena
 INNER JOIN Aeropuerto ON AA.IdAeropuerto = Aeropuerto.IdAeropuerto
 GROUP BY Aeropuerto.IdAeropuerto;
 
@@ -73,7 +73,7 @@ GROUP BY Aeropuerto.IdAeropuerto;
 SELECT COUNT(*) AS CantidadAviones, Aeropuerto.IdAeropuerto
 FROM Avion
 INNER JOIN Aerolinea A ON Avion.IdAerolinea = A.IdAerolinea
-INNER JOIN AerolineaAeropuerto AA ON A.IdAerolinea = AA.IdAerolinea
+INNER JOIN AerolineaAeropuerto AA ON A.IdAerolinea = AA.IdAeroliena
 INNER JOIN Aeropuerto ON AA.IdAeropuerto = Aeropuerto.IdAeropuerto
 WHERE Avion.Estado = 'Inactivo'
 GROUP BY Aeropuerto.IdAeropuerto;
@@ -96,7 +96,7 @@ FROM Vuelo V
 INNER JOIN ControlAvion CA ON V.IdVuelo = CA.IdVuelo
 INNER JOIN Avion ON CA.IdAvion = Avion.IdAvion
 INNER JOIN Aerolinea ON Avion.IdAerolinea = Aerolinea.IdAerolinea
-WHERE V.Estado = 'Activo'
+WHERE V.Estado = 'Activo' AND (Aerolinea.Nombre LIKE '%A%' OR Aerolinea.Nombre LIKE '%a%')
 GROUP BY Aerolinea.IdAerolinea
 ORDER BY CantidadVuelos DESC;
 
