@@ -1,24 +1,24 @@
 --Toda la información de un empleado del aeropuerto con el sueldo más alto.
 SELECT *
 FROM EmpleadoAeropuerto
-INNER JOIN PuestoEmpleadoAeropuerto PEA on EmpleadoAeropuerto.IdEmpleadoAeropuerto = PEA.IdEmpleadoAeropuerto
-INNER JOIN Puesto P on PEA.IdPuesto = P.IdPuesto
+INNER JOIN PuestoEmpleadoAeropuerto PEA ON EmpleadoAeropuerto.IdEmpleadoAeropuerto = PEA.IdEmpleadoAeropuerto
+INNER JOIN Puesto P ON PEA.IdPuesto = P.IdPuesto
 ORDER BY P.Sueldo DESC
 LIMIT 1;
 
 --Toda la información de un empleado de la aerolínea con el sueldo más alto.
 SELECT *
 FROM EmpleadoAerolinea
-INNER JOIN PuestoEmpleadoAerolinea PEA on EmpleadoAerolinea.IdEmpleadoAerolinea = PEA.IdEmpleadoAerolinea
-INNER JOIN Puesto P on PEA.IdPuesto = P.IdPuesto
+INNER JOIN PuestoEmpleadoAerolinea PEA ON EmpleadoAerolinea.IdEmpleadoAerolinea = PEA.IdEmpleadoAerolinea
+INNER JOIN Puesto P ON PEA.IdPuesto = P.IdPuesto
 ORDER BY P.Sueldo DESC
 LIMIT 1;
 
 --Promedio de salario para los aeropuertos con mayor número de empleados.
 SELECT AVG(P.Sueldo) AS SueldoPromedio, EmpleadoAeropuerto.IdAeropuerto
 FROM EmpleadoAeropuerto
-INNER JOIN PuestoEmpleadoAeropuerto PEA on EmpleadoAeropuerto.IdEmpleadoAeropuerto = PEA.IdEmpleadoAeropuerto
-INNER JOIN Puesto P on PEA.IdPuesto = P.IdPuesto
+INNER JOIN PuestoEmpleadoAeropuerto PEA ON EmpleadoAeropuerto.IdEmpleadoAeropuerto = PEA.IdEmpleadoAeropuerto
+INNER JOIN Puesto P ON PEA.IdPuesto = P.IdPuesto
 GROUP BY EmpleadoAeropuerto.IdAeropuerto
 ORDER BY SueldoPromedio DESC ;
 
@@ -31,36 +31,36 @@ GROUP BY IdAerolinea;
 --Costo de reparación, modelo, fabricante y el código de un avión para una aerolínea perteneciente a un aeropuerto específico.
 SELECT F.Costo, A.Modelo, A.Fabricante, A.Codigo, Aerolinea.IdAerolinea, Aeropuerto.IdAeropuerto
 FROM Factura F
-INNER JOIN Avion A on F.IdAvion = A.IdAvion
-INNER JOIN Aerolinea on A.IdAerolinea = Aerolinea.IdAerolinea
-INNER JOIN AerolineaAeropuerto AA on Aerolinea.IdAerolinea = AA.IdAerolinea
-INNER JOIN Aeropuerto on AA.IdAeropuerto = Aeropuerto.IdAeropuerto
+INNER JOIN Avion A ON F.IdAvion = A.IdAvion
+INNER JOIN Aerolinea ON A.IdAerolinea = Aerolinea.IdAerolinea
+INNER JOIN AerolineaAeropuerto AA ON Aerolinea.IdAerolinea = AA.IdAerolinea
+INNER JOIN Aeropuerto ON AA.IdAeropuerto = Aeropuerto.IdAeropuerto
 ORDER BY Aeropuerto.IdAeropuerto, A.IdAerolinea, F.Costo;
 
 --Cantidad de aviones activos en un aeropuerto.
 SELECT COUNT(*) AS CantidadAviones, Aeropuerto.IdAeropuerto
 FROM Avion
-INNER JOIN Aerolinea A on Avion.IdAerolinea = A.IdAerolinea
-INNER JOIN AerolineaAeropuerto AA on A.IdAerolinea = AA.IdAerolinea
-INNER JOIN Aeropuerto on AA.IdAeropuerto = Aeropuerto.IdAeropuerto
+INNER JOIN Aerolinea A ON Avion.IdAerolinea = A.IdAerolinea
+INNER JOIN AerolineaAeropuerto AA ON A.IdAerolinea = AA.IdAerolinea
+INNER JOIN Aeropuerto ON AA.IdAeropuerto = Aeropuerto.IdAeropuerto
 WHERE Avion.Estado == 'Activo'
 GROUP BY Aeropuerto.IdAeropuerto;
 
 --Promedio de costo de reparación de los aviones para un aeropuerto específico.
 SELECT AVG(F.Costo) AS CostoPromedio, Aeropuerto.IdAeropuerto
 FROM Factura F
-INNER JOIN Avion A on F.IdAvion = A.IdAvion
-INNER JOIN Aerolinea on A.IdAerolinea = Aerolinea.IdAerolinea
-INNER JOIN AerolineaAeropuerto AA on Aerolinea.IdAerolinea = AA.IdAerolinea
-INNER JOIN Aeropuerto on AA.IdAeropuerto = Aeropuerto.IdAeropuerto
+INNER JOIN Avion A ON F.IdAvion = A.IdAvion
+INNER JOIN Aerolinea ON A.IdAerolinea = Aerolinea.IdAerolinea
+INNER JOIN AerolineaAeropuerto AA ON Aerolinea.IdAerolinea = AA.IdAerolinea
+INNER JOIN Aeropuerto ON AA.IdAeropuerto = Aeropuerto.IdAeropuerto
 GROUP BY Aeropuerto.IdAeropuerto;
 
 --Cantidad de aviones inactivos dentro de una bodega.
 SELECT COUNT(*) AS CantidadAviones, Aeropuerto.IdAeropuerto
 FROM Avion
-INNER JOIN Aerolinea A on Avion.IdAerolinea = A.IdAerolinea
-INNER JOIN AerolineaAeropuerto AA on A.IdAerolinea = AA.IdAerolinea
-INNER JOIN Aeropuerto on AA.IdAeropuerto = Aeropuerto.IdAeropuerto
+INNER JOIN Aerolinea A ON Avion.IdAerolinea = A.IdAerolinea
+INNER JOIN AerolineaAeropuerto AA ON A.IdAerolinea = AA.IdAerolinea
+INNER JOIN Aeropuerto ON AA.IdAeropuerto = Aeropuerto.IdAeropuerto
 WHERE Avion.Estado = 'Inactivo'
 GROUP BY Aeropuerto.IdAeropuerto;
 
@@ -69,7 +69,7 @@ SELECT Fabricante, COUNT(Modelo) AS CantidadModelos
 FROM Avion
 GROUP BY Fabricante
 ORDER BY CantidadModelos DESC;
-------------------------------------------------------------------------------
+
 --Cantidad de aerolíneas que contienen la letra “A” en el nombre.
 --De este resultado además deben de mostrar cuáles tienen más vuelos activos.
 SELECT COUNT(A.Nombre) AS CantAerolineas
@@ -79,19 +79,18 @@ ORDER BY CantAerolineas DESC;
 
 SELECT COUNT(V.IdVuelo) AS CantidadVuelos, Aerolinea.IdAerolinea
 FROM Vuelo V
-INNER JOIN ControlAvion CA on V.IdVuelo = CA.IdVuelo
-INNER JOIN Avion on CA.IdAvion = Avion.IdAvion
-INNER JOIN Aerolinea on Avion.IdAerolinea = Aerolinea.IdAerolinea
+INNER JOIN ControlAvion CA ON V.IdVuelo = CA.IdVuelo
+INNER JOIN Avion ON CA.IdAvion = Avion.IdAvion
+INNER JOIN Aerolinea ON Avion.IdAerolinea = Aerolinea.IdAerolinea
 WHERE V.Estado = 'Activo'
+GROUP BY Aerolinea.IdAerolinea
 ORDER BY CantidadVuelos DESC;
 
-SELECT CA.HoraLlegada, Count(V.IdVuelo)
+--Intervalo de horas con la mayor llegada de aviones para un aeropuerto.
+SELECT CA.HoraLlegada, Count(V.IdVuelo) AS CantidadVuelos, A.IdAeropuerto
 FROM Controlador
-INNER JOIN ControladorControlAvion CCA on Controlador.IdControlador = CCA.IdControlador
-INNER JOIN ControlAvion CA on CCA.IdControlAvion = CA.IdControlAvion
-INNER JOIN Vuelo V on CA.IdVuelo = V.IdVuelo
-INNER JOIN Aeropuerto A on Controlador.IdAeropuerto = A.IdAeropuerto
-WHERE V.HoraLlegada BETWEEN '12:00:00' AND '13:00:00'
-    OR V.HoraLlegada BETWEEN '13:00:00' AND '14:00:00'
-    OR V.HoraLlegada BETWEEN '14:00:00' AND '15:00:00'
-    OR V.HoraLlegada BETWEEN '15:00:00' AND '16:00:00';
+INNER JOIN ControladorControlAvion CCA ON Controlador.IdControlador = CCA.IdControlador
+INNER JOIN ControlAvion CA ON CCA.IdControlAvion = CA.IdControlAvion
+INNER JOIN Vuelo V ON CA.IdVuelo = V.IdVuelo
+INNER JOIN Aeropuerto A ON Controlador.IdAeropuerto = A.IdAeropuerto
+GROUP BY CA.HoraLlegada, A.IdAeropuerto;
